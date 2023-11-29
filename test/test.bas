@@ -1,8 +1,26 @@
-FOR i = 0 TO 10
+#INCLUDE <keys.bas>
+
+CLS
+
+PRINT "Press any key TO continue"
+
+DO
+
+LOOP UNTIL INKEY$ <> ""
+
+FOR i = 1 TO 100
     PRINT i
 NEXT i
 
-FUNCTION add(a, b)
-    RETURN a + b
+PAPER 0
+
+FUNCTION test() AS STRING
+    RETURN "Hello World"
 END FUNCTION
 
+
+test = test()
+
+sprites = sprites()
+
+tiles()

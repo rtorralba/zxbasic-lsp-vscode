@@ -119,6 +119,53 @@ vscode.languages.registerCompletionItemProvider('zxbasic', {
     }
 });
 
+vscode.languages.registerDefinitionProvider('zxbasic', {
+    provideDefinition: async function(document, position, token) {
+        const range = document.getWordRangeAtPosition(position);
+        const word = document.getText(range);
+
+        let definition = await findDefinition(word); // implement this function to find the definition of the word
+        if (definition) {
+            return new vscode.Location(definition.document, definition.range);
+        }
+    }
+});
+
+const path = require('path');
+const fs = require('fs');
+
+async function findDefinition(word) {
+    const workspaceFolders = vscode.workspace.workspaceFolders;
+    if (!workspaceFolders) {
+        return;
+    }
+
+    for (const folder of workspaceFolders) {
+        const folderUri = folder.uri;
+        const pattern = new vscode.RelativePattern(folderUri, '**/*.bas'); // adjust the pattern to match your file types
+        const files = await vscode.workspace.findFiles(pattern, null, 100); // adjust the maximum number of files as needed
+
+        for (const file of files) {
+            if (!file) {
+                continue;
+            }
+            const text = fs.readFileSync(file.fsPath, 'utf8');
+            const lines = text.split('\n');
+
+            for (let i = 0; i < lines.length; i++) {
+                const line = lines[i];
+                if (line.startsWith('SUB ' + word) || line.startsWith('FUNCTION ' + word)) {
+                    return {
+                        document: vscode.Uri.file(file.fsPath),
+                        range: new vscode.Range(new vscode.Position(i, 0), new vscode.Position(i, line.length))
+                    };
+                }
+            }
+        }
+    }
+    return undefined;
+}
+
 function deactivate() {
     if (!client) {
         return undefined;
