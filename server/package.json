@@ -1,0 +1,9 @@
+{
+    "name": "zx-basic-server",
+    "description": "ZX Basic language server",
+    "version": "0.0.1",
+    "main": "./src/server.js",
+    "dependencies": {
+        "vscode-languageserver": "^9.0.1"
+    }
+}

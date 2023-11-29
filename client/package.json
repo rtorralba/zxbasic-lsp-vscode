@@ -1,0 +1,43 @@
+{
+    "name": "zx-basic",
+    "displayName": "ZX Basic",
+    "description": "ZX Basic language support",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.52.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "activationEvents": [
+        "onLanguage:zxbasic"
+    ],
+    "main": "./src/extension",
+    "dependencies": {
+        "vscode-languageclient": "^9.0.1"
+    },
+    "contributes": {
+        "languages": [
+            {
+                "id": "zxbasic",
+                "extensions": [
+                    ".bas"
+                ],
+                "aliases": [
+                    "ZX Basic",
+                    "zxbasic"
+                ]
+            }
+        ],
+        "grammars": [
+            {
+                "language": "zxbasic",
+                "scopeName": "source.zxbasic",
+                "path": "./syntaxes/zxbasic.tmLanguage.json"
+            }
+        ],
+        "documentFormattingEditProvider": {
+            "language": "zxbasic"
+        }
+    }
+}
