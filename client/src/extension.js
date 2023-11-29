@@ -11,7 +11,7 @@ const allZxBasicTokens = [
     "AND", "NOT", "OR", "bAND", "bNOT", "bOR", "bXOR", "MOD", "SHL", "SHR", "XOR",
     "ABS", "ACS", "ASN", "ATN", "ATTR", "CHR$", "CODE", "COS", "EXP", "FN", "INKEY$", "INT", "IN", "LEN", "LN", "PEEK", "PI", "POINT", "RND", "SCREEN$", "SGN", "SIN", "SQR", "STR$", "TAN", "USR", "VAL$", "VAL", "ASC", "CAST", "CHR", "CSRLIN", "HEX", "HEX16", "GetKey", "MultiKeys", "GetKeyScanCode", "LBOUND", "LCase", "STR", "POS", "SCREEN", "UCase", "Print42", "PrintAt42", "Print64", "PrintAt64",
     "BYTE", "UBYTE", "INTEGER", "UINTEGER", "LONG", "ULONG", "STRING", "FIXED", "FLOAT",
-    "#DEFINE", "#IFDEF", "#IFNDEF", "#ENDIF", "#INCLUDE ONCE", "\#INCLUDE", "#INCBIN", "#PRAGMA", "#REQUIRE", "#IF", "#ELSE", "#ELIF", "#UNDEF", "#INIT", "#LINE", "#ERROR", "#WARNING"
+    "#DEFINE", "#IFDEF", "#IFNDEF", "#ENDIF", "#INCLUDE ONCE", "#INCLUDE", "#INCBIN", "#PRAGMA", "#REQUIRE", "#IF", "#ELSE", "#ELIF", "#UNDEF", "#INIT", "#LINE", "#ERROR", "#WARNING"
 ];
 
 const indentation = '    '
@@ -112,9 +112,9 @@ function activate(context) {
 vscode.languages.registerCompletionItemProvider('zxbasic', {
     provideCompletionItems(document, position, token, context) {
         const range = document.getWordRangeAtPosition(position);
-        const word = document.getText(range);
+        const word = document.getText(range).toLowerCase();
 
-        let matchingTokens = allZxBasicTokens.filter(token => token.startsWith(word));
+        let matchingTokens = allZxBasicTokens.filter(token => token.toLowerCase().startsWith(word));
         return matchingTokens.map(token => new vscode.CompletionItem(token));
     }
 });
